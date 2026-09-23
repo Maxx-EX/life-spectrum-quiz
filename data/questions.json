@@ -718,5 +718,125 @@
     "dim": "auton",
     "text": "面对群体压力，我仍能保持自己的节奏和立场。",
     "reverse": false
+  },
+  {
+    "id": 121,
+    "dim": "tools",
+    "text": "面对问题，我更倾向于先着手寻找解决方案，而不是先反复倾诉。",
+    "reverse": false
+  },
+  {
+    "id": 122,
+    "dim": "tools",
+    "text": "我习惯把目标拆解成可执行的小步骤，一步步推进完成。",
+    "reverse": false
+  },
+  {
+    "id": 123,
+    "dim": "tools",
+    "text": "做决定时，我更依赖事实和逻辑，而不是一时的心情。",
+    "reverse": false
+  },
+  {
+    "id": 124,
+    "dim": "tools",
+    "text": "我享受用挑战或竞争来检验自己的能力。",
+    "reverse": false
+  },
+  {
+    "id": 125,
+    "dim": "tools",
+    "text": "独立完成任务时，我感到更踏实、更有掌控感。",
+    "reverse": false
+  },
+  {
+    "id": 126,
+    "dim": "tools",
+    "text": "有分歧时，我更关注\"怎么解决\"，而不是\"谁对谁错\"。",
+    "reverse": false
+  },
+  {
+    "id": 127,
+    "dim": "tools",
+    "text": "我习惯直接表达自己的需求和立场。",
+    "reverse": false
+  },
+  {
+    "id": 128,
+    "dim": "tools",
+    "text": "面对压力，我会先想行动方案，而不是先找人安慰。",
+    "reverse": false
+  },
+  {
+    "id": 129,
+    "dim": "tools",
+    "text": "遇到困难时，我常常先向他人倾诉寻求支持，而不是自己先动手解决。",
+    "reverse": true
+  },
+  {
+    "id": 130,
+    "dim": "tools",
+    "text": "我重视效率和结果，不喜欢无意义的拖延。",
+    "reverse": false
+  },
+  {
+    "id": 131,
+    "dim": "expr",
+    "text": "朋友难过时，我会自然地用陪伴和言语去安慰对方。",
+    "reverse": false
+  },
+  {
+    "id": 132,
+    "dim": "expr",
+    "text": "我乐于主动表达对身边人的欣赏与喜爱。",
+    "reverse": false
+  },
+  {
+    "id": 133,
+    "dim": "expr",
+    "text": "我能坦然承认自己的情绪，也愿意向信任的人求助。",
+    "reverse": false
+  },
+  {
+    "id": 134,
+    "dim": "expr",
+    "text": "比起\"把事情做对\"，我更在意关系是否融洽。",
+    "reverse": false
+  },
+  {
+    "id": 135,
+    "dim": "expr",
+    "text": "我擅长用细腻的语言描述自己的感受。",
+    "reverse": false
+  },
+  {
+    "id": 136,
+    "dim": "expr",
+    "text": "我习惯先照顾他人的情绪，再安排自己的节奏。",
+    "reverse": false
+  },
+  {
+    "id": 137,
+    "dim": "expr",
+    "text": "我愿意为维系亲近关系而调整自己的一些需求。",
+    "reverse": false
+  },
+  {
+    "id": 138,
+    "dim": "expr",
+    "text": "我更喜欢以倾听和陪伴的方式支持他人，而不是急着给建议。",
+    "reverse": false
+  },
+  {
+    "id": 139,
+    "dim": "expr",
+    "text": "在亲近的人面前，我能够自然地示弱或表达需要。",
+    "reverse": false
+  },
+  {
+    "id": 140,
+    "dim": "expr",
+    "text": "我不太愿意在别人面前表露自己的情绪与感受。",
+    "reverse": true
   }
 ]

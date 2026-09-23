@@ -64,6 +64,31 @@ window.LSM_Analysis = (function () {
       '」上相对偏暗，是值得留意与培养的成长区。你更擅长用优势维度来应对生活，而真正的成长，往往发生在补足暗带、让光谱更均衡的过程里。';
   }
 
+  // 认知性别画像（性别光谱域深层评估）
+  function genderPortrait(norm) {
+    var t = norm.tools, e = norm.expr;
+    if (typeof t !== 'number' || typeof e !== 'number') return null;
+    var TH = 55;
+    var type, typeName, text, bal;
+    if (t >= TH && e >= TH) {
+      type = 'androgynous'; typeName = '双性化（平衡型）'; bal = '工具—表达双高';
+      text = '你在工具效能与表达温暖两条取向上都较为充沛，是认知风格最灵活的状态：既能果断推进目标，也能细腻经营关系。心理学称之为"心理双性化"，通常伴随更高的适应弹性。请让两种取向相互配合，而不必刻意二选一。';
+    } else if (t >= TH) {
+      type = 'instrumental'; typeName = '工具导向型'; bal = '工具偏强';
+      text = '你的认知气质更偏工具导向：目标清晰、行动直接、以逻辑和结果驱动。这是高效的执行风格。提醒：在追求结果的同时，留意关系与情感的表达——补足表达温暖，会让你更有弹性、也更有人情味。';
+    } else if (e >= TH) {
+      type = 'expressive'; typeName = '表达导向型'; bal = '表达偏强';
+      text = '你的认知气质更偏表达导向：情感细腻、善于关怀与共情，很会经营关系。这是珍贵的连接能力。提醒：在照顾他人的同时，也练习直接表达自己的需求与边界，让付出更可持续、也让自己被看见。';
+    } else {
+      type = 'exploring'; typeName = '探索型（待成形）'; bal = '两者都待发展';
+      text = '目前两条取向都尚未稳定成型，你仍在探索自己的认知风格。这可能是"未定型"的阶段，也可能是两种倾向在你身上都很收敛。建议不必急于归类：在具体情境中分别练习"果断推进"与"细腻表达"，慢慢找到属于自己的平衡点。';
+    }
+    return {
+      tools: t, expr: e, type: type, typeName: typeName, balance: bal, text: text,
+      toolBand: LSM.bandOf(t), exprBand: LSM.bandOf(e)
+    };
+  }
+
   // 组装完整报告
   function buildReport(norm) {
     var comp = LSM.composite(norm);
@@ -76,7 +101,8 @@ window.LSM_Analysis = (function () {
       pbiText: pbiText(comp.pbi),
       scText: scText(comp.sc),
       portrait: portrait(syn, norm),
-      syn: syn
+      syn: syn,
+      gender: genderPortrait(norm)
     };
   }
 

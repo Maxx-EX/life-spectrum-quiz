@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>生命光谱心理测试 · 在线答题</title>
-<meta name="description" content="生命光谱心理测试（LSM-120）在线答题——120 道原创题、每题 4 个选项、12 维度深度分析，完全原创开源免费。">
+<meta name="description" content="生命光谱心理测试（LSM-140）在线答题——140 道原创题、每题 4 个选项、14 维度深度分析，完全原创开源免费。">
 <link rel="stylesheet" href="src/style.css">
 </head>
 <body>
@@ -15,20 +15,20 @@
     <div class="hero">
       <div class="badge">完全原创 · 开源免费 · Apache 2.0</div>
       <h1>生命<span>光谱</span>心理测试</h1>
-      <p>Life Spectrum Model · LSM-120 · 在线答题</p>
+      <p>Life Spectrum Model · LSM-140 · 在线答题</p>
     </div>
 
     <div class="card">
       <h2>开始作答</h2>
-      <p class="sub">120 道原创题，每题 4 个选项，测出你的心理光谱画像。</p>
+      <p class="sub">140 道原创题，每题 4 个选项，测出你的心理光谱画像。</p>
       <div class="start-meta">
-        <div class="cell"><div class="num">120</div><div class="lab">道原创题目</div></div>
-        <div class="cell"><div class="num">12</div><div class="lab">个心理维度</div></div>
-        <div class="cell"><div class="num">4</div><div class="lab">个选项</div></div>
+        <div class="cell"><div class="num">140</div><div class="lab">道原创题目</div></div>
+        <div class="cell"><div class="num">14</div><div class="lab">个心理维度</div></div>
+        <div class="cell"><div class="num">5</div><div class="lab">大光谱域</div></div>
       </div>
-      <p class="notice">作答方式：每题在「非常不符合 / 较不符合 / 较符合 / 非常符合」4 个选项中，选择最符合自己的一项；无需思考太久，凭第一直觉即可。全部答完后自动生成光谱图谱与深度分析。</p>
+      <p class="notice">作答方式：每题在「非常不符合 / 较不符合 / 较符合 / 非常符合」4 个选项中，选择最符合自己的一项；无需思考太久，凭第一直觉即可。全部答完后自动生成光谱图谱、认知性别画像与深度分析。</p>
       <div style="text-align:center;margin-top:24px">
-        <button id="startBtn" class="primary" style="font-size:16px;padding:14px 40px">开始测试（约 8 分钟）</button>
+        <button id="startBtn" class="primary" style="font-size:16px;padding:14px 40px">开始测试（约 9 分钟）</button>
       </div>
       <p style="text-align:center;color:var(--muted);font-size:12px;margin-top:12px">全程本地运行，不收集、不上传任何数据。</p>
     </div>
@@ -45,7 +45,7 @@
     </div>
     <div class="card">
       <div id="progressBar"><div id="progressFill"></div></div>
-      <div class="qmeta"><span id="qCount">1 / 120</span> · <span id="qDim"></span></div>
+      <div class="qmeta"><span id="qCount">1 / 140</span> · <span id="qDim"></span></div>
       <div id="qCard">
         <div class="qtext" id="qText"></div>
         <div class="options" id="qOpts"></div>
@@ -119,6 +119,17 @@
       <p id="safetyGuidance" style="font-size:14px;line-height:1.7;margin-top:6px"></p>
     </div>
 
+    <div class="card">
+      <h2>认知性别画像</h2>
+      <p class="sub">性别光谱域的深层评估：描述你思维与表达的气质倾向，与生理性别无关。</p>
+      <div id="genderType" style="margin:8px 0 10px"></div>
+      <div class="kpis" style="grid-template-columns:1fr 1fr">
+        <div class="kpi"><div class="lab">工具效能（果断·逻辑·行动）</div><div class="val" id="genderTools"></div></div>
+        <div class="kpi"><div class="lab">表达温暖（情感·关怀·共情）</div><div class="val" id="genderExpr"></div></div>
+      </div>
+      <p id="genderText" style="font-size:14px;line-height:1.7;margin-top:6px"></p>
+    </div>
+
     <div class="card" style="text-align:center">
       <button id="restartBtn" class="primary" style="font-size:15px;padding:13px 34px">重新测试</button>
     </div>
@@ -130,7 +141,7 @@
 
   <!-- ============ 页脚 ============ -->
   <div class="foot">
-    <p>生命光谱模型 LSM-120 · 版权归作者所有 · 开源免费（Apache 2.0）· 授权使用不转移版权</p>
+    <p>生命光谱模型 LSM-140 · 版权归作者所有 · 开源免费（Apache 2.0）· 授权使用不转移版权</p>
     <p>纸质 / 电子授权书由作者亲笔签署 · 联系作者：<a href="mailto:programmingscience@foxmail.com">programmingscience@foxmail.com</a></p>
   </div>
 </div>

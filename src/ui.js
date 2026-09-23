@@ -234,6 +234,17 @@ window.LSM_UI = (function () {
       if (sr.band !== 'low') txt += '　' + g.always;
       $('safetyGuidance').textContent = txt;
     }
+
+    // 认知性别画像（性别光谱域深层评估）
+    if (report.gender && $('genderType')) {
+      var gp = report.gender;
+      $('genderType').innerHTML =
+        '<span class="tag ' + gp.type + '">' + gp.typeName + '</span>' +
+        '<span class="tag mid">' + gp.balance + '</span>';
+      $('genderTools').innerHTML = gp.tools + '<span class="unit"> / 100</span>';
+      $('genderExpr').innerHTML = gp.expr + '<span class="unit"> / 100</span>';
+      $('genderText').textContent = gp.text;
+    }
   }
 
   // ---------- 初始化 ----------
