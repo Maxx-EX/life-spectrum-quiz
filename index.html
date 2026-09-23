@@ -57,6 +57,24 @@
     </div>
   </section>
 
+  <!-- ============ 用药安全自检屏 ============ -->
+  <section id="safetyScreen" style="display:none">
+    <div class="hero" style="padding:10px 0">
+      <div class="badge">处方药用药安全自检</div>
+    </div>
+    <div class="card">
+      <h2>用药安全自检</h2>
+      <p class="sub" id="safetyIntro"></p>
+      <div class="qmeta"><span id="safetyCount">1 / 6</span> · 面向 11–18 岁</div>
+      <div class="qtext" id="safetyText" style="font-size:18px"></div>
+      <div class="options" id="safetyOpts"></div>
+      <div class="nav">
+        <button id="safetyPrev" disabled>上一题</button>
+        <button id="safetyNext" class="primary" disabled>下一题</button>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ 结果屏 ============ -->
   <section id="resultScreen" style="display:none">
     <div class="hero" style="padding:10px 0">
@@ -89,6 +107,16 @@
     <div class="card">
       <h2>综合画像</h2>
       <p class="portrait" id="portrait"></p>
+    </div>
+
+    <div class="card">
+      <h2>处方药用药安全提示</h2>
+      <p class="sub">这是独立的安全自检结果，不参与光谱计分。</p>
+      <div class="kpis" style="grid-template-columns:1fr 1fr">
+        <div class="kpi"><div class="lab">用药安全指数</div><div class="val" id="safetyScore"></div></div>
+        <div class="kpi"><div class="lab">等级</div><div class="val" id="safetyBand" style="font-size:18px"></div></div>
+      </div>
+      <p id="safetyGuidance" style="font-size:14px;line-height:1.7;margin-top:6px"></p>
     </div>
 
     <div class="card" style="text-align:center">

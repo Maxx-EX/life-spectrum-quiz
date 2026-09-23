@@ -7,7 +7,7 @@
 window.LSM_UI = (function () {
   'use strict';
 
-  var state = { idx: 0, answers: {} };
+  var state = { idx: 0, answers: {}, safetyIdx: 0, safetyAnswers: {}, inSafety: false };
 
   // ---------- 题目排序：维度交错，避免连续同类题影响作答 ----------
   function buildOrder() {
@@ -69,9 +69,60 @@ window.LSM_UI = (function () {
 
   function next() {
     if (state.idx < ORDER.length - 1) { state.idx++; renderQuestion(); }
-    else if (Object.keys(state.answers).length >= LSM_ITEMS.length) showResults();
+    else if (Object.keys(state.answers).length >= LSM_ITEMS.length) startSafety();
   }
   function prev() { if (state.idx > 0) { state.idx--; renderQuestion(); } }
+
+  // ---------- 处方药用药安全自检（独立模块，不参与 12 维计分） ----------
+  function startSafety() {
+    state.inSafety = true; state.safetyIdx = 0; state.safetyAnswers = {};
+    if ($('safetyIntro')) $('safetyIntro').textContent = LSM_SAFETY.intro;
+    $('quizScreen').style.display = 'none';
+    $('safetyScreen').style.display = 'block';
+    renderSafetyItem();
+  }
+  function renderSafetyItem() {
+    var items = LSM_SAFETY.items;
+    $('safetyCount').textContent = (state.safetyIdx + 1) + ' / ' + items.length;
+    $('safetyText').textContent = items[state.safetyIdx].text;
+    var box = $('safetyOpts');
+    box.innerHTML = '';
+    var labels = ['非常不符合', '较不符合', '较符合', '非常符合'];
+    labels.forEach(function (lab, v) {
+      var btn = document.createElement('button');
+      btn.className = 'opt' + (state.safetyAnswers[items[state.safetyIdx].id] === v + 1 ? ' sel' : '');
+      btn.textContent = lab;
+      btn.addEventListener('click', function () { safetyPick(v + 1); });
+      box.appendChild(btn);
+    });
+    $('safetyPrev').disabled = state.safetyIdx === 0;
+    $('safetyNext').disabled = typeof state.safetyAnswers[items[state.safetyIdx].id] !== 'number';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function safetyPick(v) {
+    var items = LSM_SAFETY.items;
+    state.safetyAnswers[items[state.safetyIdx].id] = v;
+    Array.prototype.forEach.call($('safetyOpts').children, function (el, i) {
+      el.classList.toggle('sel', i === v - 1);
+    });
+    $('safetyNext').disabled = false;
+  }
+  function safetyPrev() { if (state.safetyIdx > 0) { state.safetyIdx--; renderSafetyItem(); } }
+  function safetyNext() {
+    var items = LSM_SAFETY.items;
+    if (state.safetyIdx < items.length - 1) { state.safetyIdx++; renderSafetyItem(); }
+    else showResults();
+  }
+
+  // 用药安全评分（6–24 分 → 0–100）
+  function safetyReport() {
+    var items = LSM_SAFETY.items;
+    var sum = 0;
+    items.forEach(function (it) { sum += (state.safetyAnswers[it.id] || 0); });
+    var pct = Math.round(((sum - items.length) / (items.length * 3)) * 1000) / 10;
+    var band = pct >= 80 ? 'high' : (pct >= 50 ? 'mid' : 'low');
+    return { sum: sum, pct: pct, band: band };
+  }
 
   // ---------- 原创 SVG 雷达图谱 ----------
   function radarSVG(norm) {
@@ -126,6 +177,7 @@ window.LSM_UI = (function () {
     var report = LSM_Analysis.buildReport(norm);
 
     $('quizScreen').style.display = 'none';
+    if ($('safetyScreen')) $('safetyScreen').style.display = 'none';
     $('resultScreen').style.display = 'block';
 
     // 雷达图
@@ -169,6 +221,19 @@ window.LSM_UI = (function () {
 
     // 综合画像
     $('portrait').innerHTML = report.portrait;
+
+    // 处方药用药安全结果
+    if (typeof LSM_SAFETY !== 'undefined' && $('safetyScore')) {
+      var sr = safetyReport();
+      var g = LSM_SAFETY.guidance;
+      var bandColor = sr.band === 'high' ? 'var(--high)' : (sr.band === 'mid' ? 'var(--mid)' : 'var(--low)');
+      $('safetyScore').innerHTML = sr.pct + '<span class="unit"> / 100</span>';
+      $('safetyBand').textContent = sr.band === 'high' ? '安全意识良好' : (sr.band === 'mid' ? '基本安全' : '需要重视');
+      $('safetyBand').style.color = bandColor;
+      var txt = g[sr.band];
+      if (sr.band !== 'low') txt += '　' + g.always;
+      $('safetyGuidance').textContent = txt;
+    }
   }
 
   // ---------- 初始化 ----------
@@ -176,14 +241,17 @@ window.LSM_UI = (function () {
     document.getElementById('startBtn').addEventListener('click', function () {
       document.getElementById('startScreen').style.display = 'none';
       document.getElementById('quizScreen').style.display = 'block';
-      state.idx = 0; state.answers = {};
+      state.idx = 0; state.answers = {}; state.safetyIdx = 0; state.safetyAnswers = {};
       renderQuestion();
     });
     $('prevBtn').addEventListener('click', prev);
     $('nextBtn').addEventListener('click', next);
+    if ($('safetyPrev')) $('safetyPrev').addEventListener('click', safetyPrev);
+    if ($('safetyNext')) $('safetyNext').addEventListener('click', safetyNext);
     document.getElementById('restartBtn').addEventListener('click', function () {
-      state.idx = 0; state.answers = {};
+      state.idx = 0; state.answers = {}; state.safetyIdx = 0; state.safetyAnswers = {};
       document.getElementById('resultScreen').style.display = 'none';
+      if ($('safetyScreen')) $('safetyScreen').style.display = 'none';
       document.getElementById('quizScreen').style.display = 'block';
       renderQuestion();
     });
