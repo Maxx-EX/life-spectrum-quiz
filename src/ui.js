@@ -244,6 +244,7 @@ window.LSM_UI = (function () {
       $('genderTools').innerHTML = gp.tools + '<span class="unit"> / 100</span>';
       $('genderExpr').innerHTML = gp.expr + '<span class="unit"> / 100</span>';
       $('genderText').textContent = gp.text;
+      if (gp.note && $('genderNote')) $('genderNote').textContent = gp.note;
     }
   }
 

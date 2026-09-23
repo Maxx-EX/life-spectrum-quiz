@@ -71,13 +71,13 @@ window.LSM_Analysis = (function () {
     var TH = 55;
     var type, typeName, text, bal;
     if (t >= TH && e >= TH) {
-      type = 'androgynous'; typeName = '双性化（平衡型）'; bal = '工具—表达双高';
+      type = 'androgynous'; typeName = '双性化倾向'; bal = '工具—表达双高';
       text = '你在工具效能与表达温暖两条取向上都较为充沛，是认知风格最灵活的状态：既能果断推进目标，也能细腻经营关系。心理学称之为"心理双性化"，通常伴随更高的适应弹性。请让两种取向相互配合，而不必刻意二选一。';
     } else if (t >= TH) {
-      type = 'instrumental'; typeName = '工具导向型'; bal = '工具偏强';
+      type = 'instrumental'; typeName = '工具导向倾向'; bal = '工具偏强';
       text = '你的认知气质更偏工具导向：目标清晰、行动直接、以逻辑和结果驱动。这是高效的执行风格。提醒：在追求结果的同时，留意关系与情感的表达——补足表达温暖，会让你更有弹性、也更有人情味。';
     } else if (e >= TH) {
-      type = 'expressive'; typeName = '表达导向型'; bal = '表达偏强';
+      type = 'expressive'; typeName = '表达导向倾向'; bal = '表达偏强';
       text = '你的认知气质更偏表达导向：情感细腻、善于关怀与共情，很会经营关系。这是珍贵的连接能力。提醒：在照顾他人的同时，也练习直接表达自己的需求与边界，让付出更可持续、也让自己被看见。';
     } else {
       type = 'exploring'; typeName = '探索型（待成形）'; bal = '两者都待发展';
@@ -85,7 +85,8 @@ window.LSM_Analysis = (function () {
     }
     return {
       tools: t, expr: e, type: type, typeName: typeName, balance: bal, text: text,
-      toolBand: LSM.bandOf(t), exprBand: LSM.bandOf(e)
+      toolBand: LSM.bandOf(t), exprBand: LSM.bandOf(e),
+      note: '本分类为认知性别「取向倾向」的探索性提示：阈值 55 为暂定值，需经常模与信效度研究校准后方可作为分类依据，不构成任何分类诊断。'
     };
   }
 
