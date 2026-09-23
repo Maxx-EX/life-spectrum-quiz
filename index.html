@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生命光谱心理测试 · 在线答题</title>
+<meta name="description" content="生命光谱心理测试（LSM-120）在线答题——120 道原创题、每题 4 个选项、12 维度深度分析，完全原创开源免费。">
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ 开始屏 ============ -->
+  <section id="startScreen">
+    <div class="hero">
+      <div class="badge">完全原创 · 开源免费 · Apache 2.0</div>
+      <h1>生命<span>光谱</span>心理测试</h1>
+      <p>Life Spectrum Model · LSM-120 · 在线答题</p>
+    </div>
+
+    <div class="card">
+      <h2>开始作答</h2>
+      <p class="sub">120 道原创题，每题 4 个选项，测出你的心理光谱画像。</p>
+      <div class="start-meta">
+        <div class="cell"><div class="num">120</div><div class="lab">道原创题目</div></div>
+        <div class="cell"><div class="num">12</div><div class="lab">个心理维度</div></div>
+        <div class="cell"><div class="num">4</div><div class="lab">个选项</div></div>
+      </div>
+      <p class="notice">作答方式：每题在「非常不符合 / 较不符合 / 较符合 / 非常符合」4 个选项中，选择最符合自己的一项；无需思考太久，凭第一直觉即可。全部答完后自动生成光谱图谱与深度分析。</p>
+      <div style="text-align:center;margin-top:24px">
+        <button id="startBtn" class="primary" style="font-size:16px;padding:14px 40px">开始测试（约 8 分钟）</button>
+      </div>
+      <p style="text-align:center;color:var(--muted);font-size:12px;margin-top:12px">全程本地运行，不收集、不上传任何数据。</p>
+    </div>
+
+    <div class="disclaimer">
+      <b>重要说明：</b>本测试仅用于自我探索、教育与反思，<b>不构成任何医疗诊断、精神健康评估或临床干预依据</b>。若你正经历持续的强烈痛苦、失眠、情绪失控或影响生活的困扰，请务必寻求专业心理师或精神科医生的帮助。
+    </div>
+  </section>
+
+  <!-- ============ 答题屏 ============ -->
+  <section id="quizScreen" style="display:none">
+    <div class="hero" style="padding:10px 0">
+      <div class="badge">生命光谱心理测试 · 在线答题</div>
+    </div>
+    <div class="card">
+      <div id="progressBar"><div id="progressFill"></div></div>
+      <div class="qmeta"><span id="qCount">1 / 120</span> · <span id="qDim"></span></div>
+      <div id="qCard">
+        <div class="qtext" id="qText"></div>
+        <div class="options" id="qOpts"></div>
+        <div class="nav">
+          <button id="prevBtn" disabled>上一题</button>
+          <button id="nextBtn" class="primary" disabled>下一题</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 结果屏 ============ -->
+  <section id="resultScreen" style="display:none">
+    <div class="hero" style="padding:10px 0">
+      <div class="badge">你的生命光谱画像</div>
+      <h1 style="font-size:24px">光谱图谱</h1>
+    </div>
+
+    <div class="card">
+      <div class="radar-box" id="radarChart"></div>
+      <div class="kpis">
+        <div class="kpi"><div class="lab">心理平衡指数 PBI</div><div class="val" id="kpiPbi"></div></div>
+        <div class="kpi"><div class="lab">光谱一致性 SC（越小越均衡）</div><div class="val" id="kpiSc"></div></div>
+      </div>
+      <p id="pbiText" style="font-size:14px;color:var(--muted)"></p>
+      <p id="scText" style="font-size:14px;color:var(--muted);margin-top:8px"></p>
+    </div>
+
+    <div class="card">
+      <h2>维度解读</h2>
+      <p class="sub">每一光带的详细分析（低亮=待关照 / 中亮=常见范围 / 高亮=突出优势）。</p>
+      <div class="dim-grid" id="dimGrid"></div>
+    </div>
+
+    <div class="card">
+      <h2>光谱域总结</h2>
+      <p class="sub">认知 / 情绪 / 关系 / 内在锚定四大域的汇总。</p>
+      <div id="domainSum"></div>
+    </div>
+
+    <div class="card">
+      <h2>综合画像</h2>
+      <p class="portrait" id="portrait"></p>
+    </div>
+
+    <div class="card" style="text-align:center">
+      <button id="restartBtn" class="primary" style="font-size:15px;padding:13px 34px">重新测试</button>
+    </div>
+
+    <div class="disclaimer">
+      <b>重要：</b>本测试非诊断工具。分数无好坏，只描述你在各维度的相对位置，会随生活阶段变化，建议数月后重测观察变化。若当下情绪困扰明显，请及时寻求专业帮助。
+    </div>
+  </section>
+
+  <!-- ============ 页脚 ============ -->
+  <div class="foot">
+    <p>生命光谱模型 LSM-120 · 完全原创，无版权争议 · Apache License 2.0 开源 · 完全免费</p>
+    <p>获取电子授权书 / 联系作者：<a href="mailto:programmingscience@foxmail.com">programmingscience@foxmail.com</a></p>
+  </div>
+</div>
+
+<script src="src/items.js"></script>
+<script src="src/framework.js"></script>
+<script src="src/analysis.js"></script>
+<script src="src/ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+/* ============================================================
+   生命光谱模型 LSM-120 · 界面样式
+   原创测评框架 · Apache License 2.0
+   ============================================================ */
+:root {
+  --bg: #0f1220;
+  --panel: #171b2e;
+  --panel2: #1e2340;
+  --line: #2a3150;
+  --text: #e8eaf6;
+  --muted: #9aa0c0;
+  --accent: #7c6cff;
+  --accent2: #4dd4ff;
+  --low: #ff7b72;
+  --mid: #ffd166;
+  --high: #3ddc97;
+  --radius: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  background: radial-gradient(1200px 800px at 20% -10%, #232a52 0%, var(--bg) 55%);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.7;
+}
+.wrap { max-width: 860px; margin: 0 auto; padding: 32px 18px 80px; }
+
+/* 头部 */
+.hero { text-align: center; padding: 30px 0 26px; }
+.hero .badge {
+  display: inline-block; font-size: 12px; letter-spacing: 2px; color: var(--accent2);
+  border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px; margin-bottom: 14px;
+}
+.hero h1 { font-size: 30px; font-weight: 700; letter-spacing: 1px; }
+.hero h1 span { color: var(--accent2); }
+.hero p { color: var(--muted); margin-top: 10px; font-size: 14px; }
+
+/* 卡片 */
+.card {
+  background: linear-gradient(180deg, var(--panel2), var(--panel));
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 26px; margin: 20px 0; box-shadow: 0 8px 30px rgba(0,0,0,.25);
+}
+.card h2 { font-size: 20px; margin-bottom: 6px; }
+.card .sub { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+
+/* 答题区 */
+#progressBar { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; margin-bottom: 20px; }
+#progressFill { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 99px; transition: width .3s; }
+#qCard { min-height: 260px; }
+.qmeta { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
+.qtext { font-size: 20px; font-weight: 600; line-height: 1.6; margin-bottom: 26px; }
+.options { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt {
+  flex: 1 1 21%; min-width: 0; text-align: center;
+  border: 1px solid var(--line); border-radius: 12px; padding: 12px 6px; cursor: pointer;
+  transition: all .15s; background: transparent; color: var(--text); font-size: 14px; line-height: 1.4;
+}
+.opt:hover { border-color: var(--accent); background: rgba(124,108,255,.08); }
+.opt.sel { border-color: var(--accent2); background: rgba(77,212,255,.10); box-shadow: 0 0 0 1px var(--accent2) inset; }
+.nav { display: flex; justify-content: space-between; margin-top: 22px; gap: 12px; }
+button {
+  border: 1px solid var(--line); background: var(--panel2); color: var(--text);
+  border-radius: 10px; padding: 11px 20px; cursor: pointer; font-size: 14px; transition: all .15s;
+}
+button:hover:not(:disabled) { border-color: var(--accent); }
+button:disabled { opacity: .35; cursor: not-allowed; }
+button.primary { background: linear-gradient(90deg, var(--accent), #5a4bd8); border: none; font-weight: 600; }
+button.primary:hover:not(:disabled) { filter: brightness(1.1); }
+
+/* 开始屏 */
+.start-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+.start-meta .cell { background: var(--panel2); border: 1px solid var(--line); border-radius: 12px; padding: 14px; text-align: center; }
+.start-meta .num { font-size: 26px; font-weight: 700; color: var(--accent2); }
+.start-meta .lab { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.notice { font-size: 13px; color: var(--muted); border-left: 3px solid var(--mid); padding-left: 12px; margin-top: 6px; }
+
+/* 结果区 */
+.radar-box { background: var(--panel2); border-radius: 12px; padding: 10px; }
+.radar-box svg { width: 100%; height: auto; display: block; }
+.kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+.kpi { background: var(--panel2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.kpi .lab { font-size: 12px; color: var(--muted); }
+.kpi .val { font-size: 26px; font-weight: 700; }
+.kpi .val .unit { font-size: 13px; color: var(--muted); font-weight: 400; }
+
+/* 维度卡片 */
+.dim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.dim-card { background: var(--panel2); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.dim-card h4 { font-size: 15px; display: flex; justify-content: space-between; align-items: center; }
+.tag { font-size: 11px; padding: 2px 9px; border-radius: 999px; font-weight: 600; }
+.tag.low { background: rgba(255,123,114,.15); color: var(--low); }
+.tag.mid { background: rgba(255,209,102,.15); color: var(--mid); }
+.tag.high { background: rgba(61,220,151,.15); color: var(--high); }
+.dim-card .scorebar { height: 6px; background: var(--line); border-radius: 99px; margin: 10px 0; overflow: hidden; }
+.dim-card .scorebar i { display: block; height: 100%; border-radius: 99px; }
+.dim-card .scoreval { font-size: 20px; font-weight: 700; }
+.dim-card p { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.dim-card .anlys { font-size: 13px; color: var(--text); margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 8px; }
+
+/* 光谱域 */
+.domain-card { background: var(--panel2); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 12px; }
+.domain-card .dh { display: flex; justify-content: space-between; align-items: center; }
+.domain-card h4 { font-size: 15px; }
+.domain-card .note { font-size: 12px; color: var(--muted); margin: 4px 0 10px; }
+
+/* 综合画像 */
+.portrait { font-size: 15px; line-height: 1.9; }
+.portrait b { color: var(--accent2); }
+
+/* 底部 */
+.foot { text-align: center; color: var(--muted); font-size: 12px; margin-top: 40px; line-height: 1.9; }
+.foot a { color: var(--accent2); text-decoration: none; }
+.disclaimer { border: 1px solid var(--line); background: rgba(255,209,102,.05); border-radius: 12px; padding: 16px; font-size: 13px; color: var(--muted); margin-top: 20px; }
+
+@media (max-width: 640px) {
+  .start-meta { grid-template-columns: repeat(3, 1fr); }
+  .dim-grid { grid-template-columns: 1fr; }
+  .kpis { grid-template-columns: 1fr; }
+  .qtext { font-size: 18px; }
+}
