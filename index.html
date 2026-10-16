@@ -75,6 +75,25 @@
     </div>
   </section>
 
+  <!-- ============ 性别认同·女性化向自检屏（扩展题·独立模块） ============ -->
+  <section id="genderScreen" style="display:none">
+    <div class="hero" style="padding:10px 0">
+      <div class="badge">性别认同·女性化向自检</div>
+    </div>
+    <div class="card">
+      <h2>性别探索自检 <span class="tag mid">扩展题</span></h2>
+      <p class="sub" id="genderIntro"></p>
+      <div class="qmeta"><span id="genderCount">1 / 12</span> · 独立模块 · 不参与 LSM 计分</div>
+      <div class="qtext" id="genderText" style="font-size:18px"></div>
+      <div class="options" id="genderOpts"></div>
+      <div class="nav">
+        <button id="genderPrev" disabled>上一题</button>
+        <button id="genderNext" class="primary" disabled>下一题</button>
+      </div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.6;margin-top:12px" id="genderDisclaimer"></p>
+    </div>
+  </section>
+
   <!-- ============ 结果屏 ============ -->
   <section id="resultScreen" style="display:none">
     <div class="hero" style="padding:10px 0">
@@ -117,6 +136,17 @@
         <div class="kpi"><div class="lab">等级</div><div class="val" id="safetyBand" style="font-size:18px"></div></div>
       </div>
       <p id="safetyGuidance" style="font-size:14px;line-height:1.7;margin-top:6px"></p>
+    </div>
+
+    <div class="card">
+      <h2>性别认同·女性化向自检 <span class="tag mid">扩展题</span></h2>
+      <p class="sub">这是独立的性别探索自检结果（药娘向扩展题），不参与 LSM 光谱计分。</p>
+      <div class="kpis" style="grid-template-columns:1fr 1fr">
+        <div class="kpi"><div class="lab">女性化向探索指数</div><div class="val" id="genderSelfScore"></div></div>
+        <div class="kpi"><div class="lab">阶段</div><div class="val" id="genderSelfBand" style="font-size:18px"></div></div>
+      </div>
+      <p id="genderSelfGuidance" style="font-size:14px;line-height:1.7;margin-top:6px"></p>
+      <p id="genderSelfDisclaimer" style="font-size:12px;color:var(--muted);line-height:1.6;margin-top:8px;border-top:1px dashed rgba(255,255,255,0.12);padding-top:8px"></p>
     </div>
 
     <div class="card">

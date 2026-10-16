@@ -1,13 +1,14 @@
 // ============================================================
-// 生命光谱模型 LSM-120 · 界面逻辑
+// 生命光谱模型 LSM-140 · 界面逻辑
 // 答题流程 + 结果渲染 + 原创 SVG 雷达图谱
+// 含：用药安全自检 / 性别认同·女性化向自检（扩展题独立模块）
 // 原创测评框架 · Apache License 2.0
 // ============================================================
 
 window.LSM_UI = (function () {
   'use strict';
 
-  var state = { idx: 0, answers: {}, safetyIdx: 0, safetyAnswers: {}, inSafety: false };
+  var state = { idx: 0, answers: {}, safetyIdx: 0, safetyAnswers: {}, gSelfIdx: 0, gSelfAnswers: {}, inSafety: false, inGender: false };
 
   // ---------- 题目排序：维度交错，避免连续同类题影响作答 ----------
   function buildOrder() {
@@ -111,7 +112,63 @@ window.LSM_UI = (function () {
   function safetyNext() {
     var items = LSM_SAFETY.items;
     if (state.safetyIdx < items.length - 1) { state.safetyIdx++; renderSafetyItem(); }
+    else startGenderSelf();
+  }
+
+  // ---------- 性别认同·女性化向自检（扩展题·独立模块，不参与 LSM 计分） ----------
+  function startGenderSelf() {
+    if (typeof LSM_GENDER_SELF === 'undefined' || !$('genderScreen')) { showResults(); return; }
+    state.inGender = true; state.gSelfIdx = 0; state.gSelfAnswers = {};
+    if ($('genderIntro')) $('genderIntro').textContent = LSM_GENDER_SELF.intro;
+    if ($('genderDisclaimer')) $('genderDisclaimer').textContent = LSM_GENDER_SELF.disclaimer;
+    $('safetyScreen').style.display = 'none';
+    $('genderScreen').style.display = 'block';
+    renderGenderItem();
+  }
+  function renderGenderItem() {
+    var items = LSM_GENDER_SELF.items;
+    $('genderCount').textContent = (state.gSelfIdx + 1) + ' / ' + items.length;
+    $('genderText').textContent = items[state.gSelfIdx].text;
+    var box = $('genderOpts');
+    box.innerHTML = '';
+    var labels = ['非常不符合', '较不符合', '较符合', '非常符合'];
+    labels.forEach(function (lab, v) {
+      var btn = document.createElement('button');
+      btn.className = 'opt' + (state.gSelfAnswers[items[state.gSelfIdx].id] === v + 1 ? ' sel' : '');
+      btn.textContent = lab;
+      btn.addEventListener('click', function () { genderPick(v + 1); });
+      box.appendChild(btn);
+    });
+    $('genderPrev').disabled = state.gSelfIdx === 0;
+    $('genderNext').disabled = typeof state.gSelfAnswers[items[state.gSelfIdx].id] !== 'number';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function genderPick(v) {
+    var items = LSM_GENDER_SELF.items;
+    state.gSelfAnswers[items[state.gSelfIdx].id] = v;
+    Array.prototype.forEach.call($('genderOpts').children, function (el, i) {
+      el.classList.toggle('sel', i === v - 1);
+    });
+    $('genderNext').disabled = false;
+  }
+  function genderPrev() { if (state.gSelfIdx > 0) { state.gSelfIdx--; renderGenderItem(); } }
+  function genderNext() {
+    var items = LSM_GENDER_SELF.items;
+    if (state.gSelfIdx < items.length - 1) { state.gSelfIdx++; renderGenderItem(); }
     else showResults();
+  }
+
+  // 性别探索评分（12 题，反向题按 5−原始分反转；12–48 分 → 0–100）
+  function genderSelfReport() {
+    var items = LSM_GENDER_SELF.items;
+    var sum = 0;
+    items.forEach(function (it) {
+      var v = state.gSelfAnswers[it.id] || 0;
+      sum += (it.reverse ? (5 - v) : v);
+    });
+    var pct = Math.round(((sum - items.length) / (items.length * 3)) * 1000) / 10;
+    var band = pct >= 60 ? 'high' : (pct >= 35 ? 'mid' : 'low');
+    return { sum: sum, pct: pct, band: band };
   }
 
   // 用药安全评分（6–24 分 → 0–100）
@@ -178,6 +235,7 @@ window.LSM_UI = (function () {
 
     $('quizScreen').style.display = 'none';
     if ($('safetyScreen')) $('safetyScreen').style.display = 'none';
+    if ($('genderScreen')) $('genderScreen').style.display = 'none';
     $('resultScreen').style.display = 'block';
 
     // 雷达图
@@ -235,6 +293,18 @@ window.LSM_UI = (function () {
       $('safetyGuidance').textContent = txt;
     }
 
+    // 性别认同·女性化向自检结果（扩展题·独立模块）
+    if (typeof LSM_GENDER_SELF !== 'undefined' && $('genderSelfScore')) {
+      var gr = genderSelfReport();
+      var gg = LSM_GENDER_SELF.guidance;
+      var gcol = gr.band === 'high' ? 'var(--high)' : (gr.band === 'mid' ? 'var(--mid)' : 'var(--low)');
+      $('genderSelfScore').innerHTML = gr.pct + '<span class="unit"> / 100</span>';
+      $('genderSelfBand').textContent = gr.band === 'high' ? '探索感受较明显' : (gr.band === 'mid' ? '存在探索倾向' : '探索较轻微');
+      $('genderSelfBand').style.color = gcol;
+      $('genderSelfGuidance').textContent = gg[gr.band];
+      $('genderSelfDisclaimer').textContent = LSM_GENDER_SELF.disclaimer;
+    }
+
     // 认知性别画像（性别光谱域深层评估）
     if (report.gender && $('genderType')) {
       var gp = report.gender;
@@ -254,16 +324,21 @@ window.LSM_UI = (function () {
       document.getElementById('startScreen').style.display = 'none';
       document.getElementById('quizScreen').style.display = 'block';
       state.idx = 0; state.answers = {}; state.safetyIdx = 0; state.safetyAnswers = {};
+      state.gSelfIdx = 0; state.gSelfAnswers = {};
       renderQuestion();
     });
     $('prevBtn').addEventListener('click', prev);
     $('nextBtn').addEventListener('click', next);
     if ($('safetyPrev')) $('safetyPrev').addEventListener('click', safetyPrev);
     if ($('safetyNext')) $('safetyNext').addEventListener('click', safetyNext);
+    if ($('genderPrev')) $('genderPrev').addEventListener('click', genderPrev);
+    if ($('genderNext')) $('genderNext').addEventListener('click', genderNext);
     document.getElementById('restartBtn').addEventListener('click', function () {
       state.idx = 0; state.answers = {}; state.safetyIdx = 0; state.safetyAnswers = {};
+      state.gSelfIdx = 0; state.gSelfAnswers = {};
       document.getElementById('resultScreen').style.display = 'none';
       if ($('safetyScreen')) $('safetyScreen').style.display = 'none';
+      if ($('genderScreen')) $('genderScreen').style.display = 'none';
       document.getElementById('quizScreen').style.display = 'block';
       renderQuestion();
     });
